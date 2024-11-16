@@ -1,0 +1,421 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Biblioteca API",
+      "version": "1.0.0",
+      "description": "API para gestionar una biblioteca: usuarios, libros, préstamos, devoluciones, notificaciones, categorías y autores."
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3000/api",
+        "description": "Servidor local"
+      }
+    ],
+    "paths": {
+      "/usuarios": {
+        "get": {
+          "summary": "Obtener todos los usuarios",
+          "responses": {
+            "200": {
+              "description": "Lista de usuarios",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Usuario"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Crear un nuevo usuario",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioInput"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Usuario creado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Usuario"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/usuarios/login": {
+        "post": {
+          "summary": "Iniciar sesión",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginInput"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Inicio de sesión exitoso",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "message": { "type": "string" },
+                      "token": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/libros": {
+        "get": {
+          "summary": "Obtener todos los libros",
+          "responses": {
+            "200": {
+              "description": "Lista de libros",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Libro"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Crear un nuevo libro",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LibroInput"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Libro creado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Libro"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/prestamos": {
+        "get": {
+          "summary": "Obtener todos los préstamos",
+          "responses": {
+            "200": {
+              "description": "Lista de préstamos",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Prestamo"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Solicitar un préstamo",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrestamoInput"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Préstamo solicitado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Prestamo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/devoluciones": {
+        "get": {
+          "summary": "Obtener todas las devoluciones",
+          "responses": {
+            "200": {
+              "description": "Lista de devoluciones",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Devolucion"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Registrar una devolución",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DevolucionInput"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Devolución registrada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Devolucion"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/notificaciones": {
+        "get": {
+          "summary": "Obtener todas las notificaciones de un usuario",
+          "parameters": [
+            {
+              "name": "idUsuario",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de notificaciones",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Notificacion"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Crear una notificación",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificacionInput"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Notificación creada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Notificacion"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/categorias": {
+        "get": {
+          "summary": "Obtener todas las categorías",
+          "responses": {
+            "200": {
+              "description": "Lista de categorías",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Categoria"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Crear una nueva categoría",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoriaInput"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Categoría creada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Categoria"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/autores": {
+        "get": {
+          "summary": "Obtener todos los autores",
+          "responses": {
+            "200": {
+              "description": "Lista de autores",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Autor"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Crear un nuevo autor",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AutorInput"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Autor creado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Autor"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Usuario": {
+          "type": "object",
+          "properties": {
+            "idUsuario": { "type": "integer" },
+            "nombre": { "type": "string" },
+            "apellido": { "type": "string" },
+            "correo": { "type": "string" }
+          }
+        },
+        "Libro": {
+          "type": "object",
+          "properties": {
+            "idLibro": { "type": "integer" },
+            "titulo": { "type": "string" }
+          }
+        },
+        "Prestamo": {
+          "type": "object",
+          "properties": {
+            "idPrestamo": { "type": "integer" },
+            "fechaPrestamo": { "type": "string" }
+          }
+        },
+        "Devolucion": {
+          "type": "object",
+          "properties": {
+            "idDevolucion": { "type": "integer" },
+            "fechaDevolucion": { "type": "string" }
+          }
+        },
+        "Categoria": {
+          "type": "object",
+          "properties": {
+            "idCategoria": { "type": "integer" },
+            "nombre": { "type": "string" }
+          }
+        },
+        "Autor": {
+          "type": "object",
+          "properties": {
+            "idAutor": { "type": "integer" },
+            "nombre": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+  
